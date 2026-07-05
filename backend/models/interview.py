@@ -27,6 +27,26 @@ class InterviewSession(db.Model):
         default="active"
     )
 
+    difficulty = db.Column(
+        db.String(20),
+        default="medium"
+    )
+
+    interview_type = db.Column(
+        db.String(30),
+        default="technical"
+    )
+
+    resume_text = db.Column(
+        db.Text,
+        nullable=True
+    )
+
+    question_count = db.Column(
+        db.Integer,
+        default=0
+    )
+
     started_at = db.Column(
         db.DateTime,
         default=datetime.utcnow
