@@ -22,7 +22,7 @@ const styles = {
     width: "32px",
     height: "32px",
     borderRadius: "50%",
-    background: "#e8e2da",
+    background: "var(--surface-sunken)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -30,8 +30,8 @@ const styles = {
     flexShrink: 0,
   },
   bubble: {
-    background: "#fffefcee",
-    border: "1px solid #e8e2da",
+    background: "var(--surface)",
+    border: "1px solid var(--border)",
     borderRadius: "18px",
     borderBottomLeftRadius: "4px",
     padding: "14px 18px",
@@ -44,7 +44,7 @@ const styles = {
     width: "7px",
     height: "7px",
     borderRadius: "50%",
-    background: "#c4b5a5",
+    background: "var(--ink-soft)",
     animation: "pulse 1.2s ease-in-out infinite",
   },
 };

@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "../context/AuthContext";
 
-const API = "http://localhost:5000/api";
+const API = import.meta.env.VITE_GRIEF_API_URL || "http://localhost:5001/api";
 
-export default function Journal({ userId }) {
+export default function Journal() {
+  const { username: userId } = useAuth();
   const [entries, setEntries] = useState([]);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -141,7 +143,7 @@ export default function Journal({ userId }) {
             {entries.length === 0 ? (
               <div style={styles.emptyState}>
                 <p>No entries yet.</p>
-                <p style={{ fontSize: "13px", color: "#9e918a", marginTop: "6px" }}>
+                <p style={{ fontSize: "13px", color: "var(--ink-soft)", marginTop: "6px" }}>
                   Start writing whenever you feel ready.
                 </p>
               </div>
@@ -187,39 +189,39 @@ export default function Journal({ userId }) {
 }
 
 const styles = {
-  page: { display: "flex", flexDirection: "column", height: "100vh", background: "#f7f4f0" },
+  page: { display: "flex", flexDirection: "column", height: "calc(100vh - 28px)", background: "var(--bg)" },
   header: {
     padding: "20px 28px 16px",
-    borderBottom: "1px solid #e8e2da",
+    borderBottom: "1px solid var(--border)",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     flexWrap: "wrap",
     gap: "12px",
   },
-  title: { fontFamily: "'Lora', serif", fontSize: "20px", fontWeight: "500", color: "#2c2420" },
-  subtitle: { fontSize: "13px", color: "#9e918a", marginTop: "2px", fontStyle: "italic" },
+  title: { fontFamily: "'Space Grotesk', serif", fontSize: "20px", fontWeight: "500", color: "var(--ink)" },
+  subtitle: { fontSize: "13px", color: "var(--ink-soft)", marginTop: "2px", fontStyle: "italic" },
   tabs: { display: "flex", gap: "6px" },
   tab: {
     padding: "8px 14px",
     borderRadius: "10px",
-    border: "1px solid #ddd8d0",
+    border: "1px solid var(--border)",
     background: "transparent",
-    color: "#6b5e58",
+    color: "var(--ink-soft)",
     fontSize: "13px",
     cursor: "pointer",
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "'Space Grotesk', sans-serif",
     transition: "all 0.2s",
   },
   tabActive: {
-    background: "#c17f5a",
-    color: "#fff",
-    border: "1px solid #c17f5a",
+    background: "var(--companion)",
+    color: "var(--surface)",
+    border: "1px solid var(--companion)",
   },
   content: { flex: 1, overflowY: "auto", padding: "24px 28px", display: "flex", flexDirection: "column", gap: "16px" },
   card: {
-    background: "#fffefcee",
-    border: "1px solid #e8e2da",
+    background: "var(--surface)ee",
+    border: "1px solid var(--border)",
     borderRadius: "16px",
     padding: "22px",
     display: "flex",
@@ -228,11 +230,11 @@ const styles = {
   },
   titleInput: {
     border: "none",
-    borderBottom: "1px solid #e8e2da",
+    borderBottom: "1px solid var(--border)",
     background: "transparent",
     fontSize: "18px",
-    fontFamily: "'Lora', serif",
-    color: "#2c2420",
+    fontFamily: "'Space Grotesk', serif",
+    color: "var(--ink)",
     padding: "0 0 10px",
     outline: "none",
     width: "100%",
@@ -242,8 +244,8 @@ const styles = {
     border: "none",
     background: "transparent",
     fontSize: "14.5px",
-    fontFamily: "'DM Sans', sans-serif",
-    color: "#2c2420",
+    fontFamily: "'Space Grotesk', sans-serif",
+    color: "var(--ink)",
     outline: "none",
     lineHeight: "1.75",
     width: "100%",
@@ -251,40 +253,40 @@ const styles = {
   writeActions: { display: "flex", justifyContent: "flex-end" },
   saveBtn: {
     padding: "10px 22px",
-    background: "#c17f5a",
-    color: "#fff",
+    background: "var(--companion)",
+    color: "var(--surface)",
     border: "none",
     borderRadius: "10px",
     cursor: "pointer",
     fontSize: "14px",
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "'Space Grotesk', sans-serif",
     fontWeight: "500",
   },
   summaryBtn: {
     padding: "11px 18px",
-    background: "#e8f0ea",
-    color: "#4a7a58",
-    border: "1px solid #c0d8c8",
+    background: "var(--practice-soft)",
+    color: "var(--practice)",
+    border: "1px solid var(--practice-soft)",
     borderRadius: "12px",
     cursor: "pointer",
     fontSize: "13.5px",
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "'Space Grotesk', sans-serif",
     fontWeight: "500",
     alignSelf: "flex-start",
     transition: "all 0.2s",
   },
   summaryCard: {
-    background: "#f0fdf4",
-    border: "1px solid #c0d8c8",
+    background: "var(--practice-soft)",
+    border: "1px solid var(--practice-soft)",
     borderRadius: "14px",
     padding: "18px 20px",
   },
-  summaryTitle: { fontSize: "13px", color: "#4a7a58", fontWeight: "500", marginBottom: "8px" },
-  summaryText: { fontSize: "14px", color: "#2c2420", lineHeight: "1.7", fontFamily: "'Lora', serif", fontStyle: "italic" },
-  emptyState: { textAlign: "center", color: "#6b5e58", padding: "40px 0", fontFamily: "'Lora', serif" },
+  summaryTitle: { fontSize: "13px", color: "var(--practice)", fontWeight: "500", marginBottom: "8px" },
+  summaryText: { fontSize: "14px", color: "var(--ink)", lineHeight: "1.7", fontFamily: "'Space Grotesk', serif", fontStyle: "italic" },
+  emptyState: { textAlign: "center", color: "var(--ink-soft)", padding: "40px 0", fontFamily: "'Space Grotesk', serif" },
   entryCard: {
-    background: "#fffefcee",
-    border: "1px solid #e8e2da",
+    background: "var(--surface)ee",
+    border: "1px solid var(--border)",
     borderRadius: "14px",
     padding: "18px 20px",
     display: "flex",
@@ -292,27 +294,27 @@ const styles = {
     gap: "12px",
   },
   entryHeader: { display: "flex", justifyContent: "space-between", alignItems: "flex-start" },
-  entryTitle: { fontFamily: "'Lora', serif", fontSize: "15px", color: "#2c2420", fontWeight: "500" },
-  entryDate: { fontSize: "11px", color: "#9e918a", marginTop: "3px" },
-  entryContent: { fontSize: "14px", color: "#4a3f3a", lineHeight: "1.7" },
+  entryTitle: { fontFamily: "'Space Grotesk', serif", fontSize: "15px", color: "var(--ink)", fontWeight: "500" },
+  entryDate: { fontSize: "11px", color: "var(--ink-soft)", marginTop: "3px" },
+  entryContent: { fontSize: "14px", color: "var(--ink)", lineHeight: "1.7" },
   reflectBtn: {
     padding: "6px 14px",
-    background: "#f5e6d8",
-    color: "#c17f5a",
-    border: "1px solid #e8c9a8",
+    background: "var(--companion-soft)",
+    color: "var(--companion)",
+    border: "1px solid var(--warn-soft)",
     borderRadius: "8px",
     cursor: "pointer",
     fontSize: "12px",
-    fontFamily: "'DM Sans', sans-serif",
+    fontFamily: "'Space Grotesk', sans-serif",
     fontWeight: "500",
     flexShrink: 0,
   },
   reflectionBox: {
-    background: "#f5e6d8",
+    background: "var(--companion-soft)",
     borderRadius: "10px",
     padding: "12px 16px",
-    borderLeft: "3px solid #c17f5a",
+    borderLeft: "3px solid var(--companion)",
   },
-  reflectionLabel: { fontSize: "11px", color: "#c17f5a", fontWeight: "500", marginBottom: "6px" },
-  reflectionText: { fontSize: "13.5px", color: "#4a3f3a", lineHeight: "1.7", fontFamily: "'Lora', serif", fontStyle: "italic" },
+  reflectionLabel: { fontSize: "11px", color: "var(--companion)", fontWeight: "500", marginBottom: "6px" },
+  reflectionText: { fontSize: "13.5px", color: "var(--ink)", lineHeight: "1.7", fontFamily: "'Space Grotesk', serif", fontStyle: "italic" },
 };

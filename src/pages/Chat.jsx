@@ -1,8 +1,9 @@
 import { useState, useRef, useEffect } from "react";
 import ChatBubble from "../components/ChatBubble";
-import TypingIndicator from "../components/TypingIndicator";
+import TypingIndicator from "../components/Typingindicator";
+import { useAuth } from "../context/AuthContext";
 
-const API = "http://localhost:5000/api";
+const API = import.meta.env.VITE_GRIEF_API_URL || "http://localhost:5001/api";
 
 const GREETINGS = [
   "I'm here with you. Take your time — there's no rush.",
@@ -10,7 +11,9 @@ const GREETINGS = [
   "Grief has no timeline. I'm here whenever you need.",
 ];
 
-export default function Chat({ sessionId }) {
+export default function Chat() {
+  const { username } = useAuth();
+  const sessionId = username;
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -116,7 +119,7 @@ export default function Chat({ sessionId }) {
         window.speechSynthesis.speak(utterance);
       }
     } catch (err) {
-      setError("Could not reach the server. Make sure Flask is running on port 5000.");
+      setError("Could not reach the companion server. Make sure the grief-companion Flask backend is running on port 5001.");
       setMessages((prev) => prev.slice(0, -1)); // remove user message on error
       setInput(text);
     } finally {
@@ -222,27 +225,26 @@ const styles = {
   page: {
     display: "flex",
     flexDirection: "column",
-    height: "100vh",
-    background: "#f7f4f0",
+    height: "calc(100vh - 28px)",
+    background: "var(--bg)",
   },
   header: {
     padding: "20px 28px 16px",
-    borderBottom: "1px solid #e8e2da",
-    background: "#f7f4f0",
+    borderBottom: "1px solid var(--border)",
+    background: "var(--bg)",
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
   },
   title: {
-    fontFamily: "'Lora', serif",
     fontSize: "20px",
-    fontWeight: "500",
-    color: "#2c2420",
+    fontWeight: "600",
+    color: "var(--companion)",
     letterSpacing: "-0.3px",
   },
   subtitle: {
     fontSize: "13px",
-    color: "#9e918a",
+    color: "var(--ink-soft)",
     marginTop: "2px",
     fontStyle: "italic",
   },
@@ -255,8 +257,8 @@ const styles = {
   },
   inputArea: {
     padding: "16px 24px 20px",
-    borderTop: "1px solid #e8e2da",
-    background: "#f0ece6",
+    borderTop: "1px solid var(--border)",
+    background: "var(--surface)",
   },
   inputRow: {
     display: "flex",
@@ -267,8 +269,8 @@ const styles = {
     width: "42px",
     height: "42px",
     borderRadius: "50%",
-    border: "1px solid #ddd8d0",
-    background: "#fff",
+    border: "1px solid var(--border)",
+    background: "var(--surface)",
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
@@ -278,28 +280,28 @@ const styles = {
     transition: "all 0.2s",
   },
   voiceBtnActive: {
-    background: "#fdf2f2",
-    border: "1.5px solid #b85c5c",
+    background: "var(--danger-soft)",
+    border: "1.5px solid var(--danger)",
     animation: "breathe 1.5s ease-in-out infinite",
   },
   listeningDot: {
     width: "12px",
     height: "12px",
     borderRadius: "50%",
-    background: "#b85c5c",
+    background: "var(--danger)",
     display: "block",
     animation: "pulse 1s ease-in-out infinite",
   },
   textarea: {
     flex: 1,
     resize: "none",
-    border: "1px solid #ddd8d0",
+    border: "1px solid var(--border)",
     borderRadius: "14px",
     padding: "11px 16px",
     fontSize: "14.5px",
-    fontFamily: "'DM Sans', sans-serif",
-    background: "#fff",
-    color: "#2c2420",
+    fontFamily: "inherit",
+    background: "var(--surface)",
+    color: "var(--ink)",
     outline: "none",
     lineHeight: "1.5",
     transition: "border-color 0.2s",
@@ -307,16 +309,16 @@ const styles = {
     overflowY: "auto",
   },
   textareaListening: {
-    border: "1.5px solid #b85c5c",
-    background: "#fdf9f9",
+    border: "1.5px solid var(--danger)",
+    background: "var(--danger-soft)",
   },
   sendBtn: {
     width: "42px",
     height: "42px",
     borderRadius: "50%",
     border: "none",
-    background: "#c17f5a",
-    color: "#fff",
+    background: "var(--companion)",
+    color: "var(--companion-ink)",
     fontSize: "18px",
     cursor: "pointer",
     display: "flex",
@@ -328,18 +330,18 @@ const styles = {
   },
   listeningHint: {
     fontSize: "12px",
-    color: "#b85c5c",
+    color: "var(--danger)",
     marginTop: "8px",
     textAlign: "center",
     fontStyle: "italic",
   },
   errorBanner: {
-    background: "#fdf2f2",
-    border: "1px solid #f5c6c6",
+    background: "var(--danger-soft)",
+    border: "1px solid var(--danger-soft)",
     borderRadius: "10px",
     padding: "12px 16px",
     fontSize: "13px",
-    color: "#b85c5c",
+    color: "var(--danger)",
     marginBottom: "12px",
     textAlign: "center",
   },
