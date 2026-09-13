@@ -271,35 +271,119 @@ button[type="button"]:hover { background: var(--surface-sunken); color: var(--in
 /* ---------- Auth pages ---------- */
 
 .auth-page {
+  position: relative;
   height: calc(100vh - 28px);
   width: 100%;
+  overflow: hidden;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background:
-    radial-gradient(circle at 20% 20%, var(--practice-soft), transparent 40%),
-    radial-gradient(circle at 80% 80%, var(--companion-soft), transparent 40%),
-    var(--bg);
+  gap: 32px;
+  background: var(--bg);
 }
 
-.auth-form {
-  width: 340px;
-  background: var(--surface);
+/* ---------- Ambient background orbs ---------- */
+
+.auth-orbs-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes drift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(40px, -30px) scale(1.15); }
+}
+@keyframes drift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-50px, 40px) scale(1.1); }
+}
+@keyframes drift3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(30px, 50px) scale(0.9); }
+}
+
+.auth-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.45;
+}
+
+.auth-orb-1 { width: 300px; height: 300px; background: var(--practice); top: 12%; left: 15%; animation: drift1 9s ease-in-out infinite; }
+.auth-orb-2 { width: 260px; height: 260px; background: var(--companion); bottom: 12%; right: 15%; animation: drift2 11s ease-in-out infinite; }
+.auth-orb-3 { width: 180px; height: 180px; background: var(--warn); top: 50%; left: 50%; animation: drift3 13s ease-in-out infinite; opacity: 0.25; }
+
+/* ---------- Branding content ---------- */
+
+.auth-branding-content { position: relative; z-index: 1; text-align: center; max-width: 460px; }
+
+.auth-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--practice), var(--companion));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 12px;
+}
+
+.auth-tagline {
+  font-size: 15px;
+  color: var(--ink-soft);
+  min-height: 22px;
+  animation: fadeUp 0.5s ease both;
+}
+
+.auth-pills { display: flex; gap: 10px; justify-content: center; margin-top: 18px; }
+
+.auth-pill {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid;
+}
+
+.auth-pill-practice { color: var(--practice); border-color: var(--practice); background: var(--practice-soft); }
+.auth-pill-companion { color: var(--companion); border-color: var(--companion); background: var(--companion-soft); }
+
+/* ---------- Form ---------- */
+
+.auth-form-glass {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 340px;
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: blur(10px);
   border: 1px solid var(--border);
-  border-radius: 14px;
+  border-radius: 18px;
   padding: 32px;
   box-shadow: var(--shadow);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  animation: fadeUp 0.4s ease both;
 }
 
-.auth-form h2 { margin-bottom: 6px; }
+.auth-kicker { font-size: 12px; color: var(--practice); font-weight: 600; letter-spacing: 0.05em; margin-bottom: -6px; }
 
-.auth-form button[type="submit"] { width: 100%; margin-top: 6px; }
+.auth-form-glass h2 { margin-bottom: 4px; }
 
-.auth-form p { margin-top: 14px; font-size: 13px; color: var(--ink-soft); text-align: center; }
-.auth-form a { color: var(--practice); text-decoration: none; font-weight: 600; }
+.auth-field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 0; }
+.auth-field span { font-size: 12px; color: var(--ink-soft); }
+
+.auth-field input:focus { box-shadow: 0 0 0 3px var(--practice-soft), 0 0 16px var(--practice-glow); }
+
+.auth-submit { width: 100%; margin-top: 8px; }
+
+.auth-switch { margin-top: 10px; font-size: 13px; color: var(--ink-soft); text-align: center; }
+.auth-switch a { color: var(--practice); text-decoration: none; font-weight: 600; }
 
 .auth-error { color: var(--danger); font-size: 13px; margin-bottom: 4px; }
 .auth-success { color: var(--good); font-size: 13px; margin-bottom: 4px; }
@@ -670,4 +754,7 @@ button[type="button"]:hover { background: var(--surface-sunken); color: var(--in
   .home-username { font-size: 26px; }
 
   .app-footer { font-size: 9px; padding: 0 8px; text-align: center; }
+
+  .auth-branding-content { display: none; }
+  .auth-form-glass { width: 90%; max-width: 340px; }
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import AuthBranding from "../components/AuthBranding";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -26,13 +27,28 @@ export default function Login() {
 
   return (
     <div className="auth-page">
-      <form onSubmit={handleSubmit} className="auth-form">
+      <AuthBranding />
+
+      <form onSubmit={handleSubmit} className="auth-form auth-form-glass">
+        <p className="auth-kicker">Welcome back</p>
         <h2>Log in</h2>
         {error && <p className="auth-error">{error}</p>}
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <button type="submit" disabled={loading}>{loading ? "Logging in…" : "Log in"}</button>
-        <p>No account? <Link to="/register">Register</Link></p>
+
+        <label className="auth-field">
+          <span>Email</span>
+          <input type="email" placeholder="you@example.com" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        </label>
+
+        <label className="auth-field">
+          <span>Password</span>
+          <input type="password" placeholder="••••••••" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        </label>
+
+        <button type="submit" disabled={loading} className="auth-submit">
+          {loading ? "Logging in…" : "Log in"}
+        </button>
+
+        <p className="auth-switch">No account? <Link to="/register">Create one</Link></p>
       </form>
     </div>
   );
