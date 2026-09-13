@@ -3,6 +3,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { ThemeProvider } from "./context/Themecontext";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Sidebar from "./components/Sidebar";
+import Footer from "./components/footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
@@ -11,6 +12,7 @@ import Report from "./pages/Report";
 import Chat from "./pages/Chat";
 import MoodTracker from "./pages/MoodTracker";
 import Journal from "./pages/Journal";
+import Letters from "./pages/Letters";
 import BreathingExercise from "./pages/Breathexercise";
 import "./index.css";
 
@@ -56,11 +58,16 @@ export default function App() {
               element={<ProtectedRoute><Shell><Journal /></Shell></ProtectedRoute>}
             />
             <Route
+              path="/letters"
+              element={<ProtectedRoute><Shell><Letters /></Shell></ProtectedRoute>}
+            />
+            <Route
               path="/breathing"
               element={<ProtectedRoute><Shell><BreathingExercise /></Shell></ProtectedRoute>}
             />
             <Route path="*" element={<Navigate to="/home" replace />} />
           </Routes>
+          <Footer />
         </AuthProvider>
       </BrowserRouter>
     </ThemeProvider>

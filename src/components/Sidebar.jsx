@@ -19,6 +19,7 @@ export default function Sidebar() {
         <NavLink to="/chat" className={({ isActive }) => (isActive ? "active" : "")}>Chat</NavLink>
         <NavLink to="/mood" className={({ isActive }) => (isActive ? "active" : "")}>Mood</NavLink>
         <NavLink to="/journal" className={({ isActive }) => (isActive ? "active" : "")}>Journal</NavLink>
+        <NavLink to="/letters" className={({ isActive }) => (isActive ? "active" : "")}>Letters</NavLink>
         <NavLink to="/breathing" className={({ isActive }) => (isActive ? "active" : "")}>Breathing</NavLink>
       </nav>
 
